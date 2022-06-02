@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         Donkey Tree
-// @version      0.2.2
+// @namespace    http://tampermonkey.net/
+// @version      0.2.3
 // @description  try to take over the world!
 // @author       Aeroraven
 // @match        https://qah5.zhihuishu.com/qa.html*
@@ -31,7 +32,7 @@ unsafeWindow.fuck=function (x){
         .catch(err => {
         alert('Error in copying text: ', err);
     });
-    document.getElementsByTagName("textarea")[0].innerHTML=text.slice(7).substring(0,text.length-14);
+    document.getElementsByTagName("textarea")[0].value=text.slice(7).substring(0,text.length-14);
 }
 unsafeWindow.applyShit=function(){
     document.getElementsByClassName("el-dialog__header")[0].children[0].children[1].innerHTML="我来回答 <a onclick='window.fuckPaste()'>【OvO 粘贴答案】</a>"
@@ -68,8 +69,6 @@ unsafeWindow.t2 =setInterval(function(){
     }
     console.log("Applied");
 },2500);
-
-    // Your code here...
 
 })();
 setInterval(()=>(function() { function R(a){ona = "on"+a; if(window.addEventListener) window.addEventListener(a, function (e) { for(var n=e.originalTarget; n; n=n.parentNode) n[ona]=null; }, true); window[ona]=null; document[ona]=null; if(document.body) document.body[ona]=null; } R("contextmenu"); R("click"); R("mousedown"); R("mouseup"); R("selectstart");})(),1000)
