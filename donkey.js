@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Donkey Tree
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.2.1
 // @description  try to take over the world!
-// @author       Cesium Chloride
+// @author       Aeroraven
 // @match        https://qah5.zhihuishu.com/qa.html*
 // ==/UserScript==
 
@@ -31,7 +31,11 @@ unsafeWindow.applyShit=function(){
     document.getElementsByClassName("el-dialog__header")[0].children[0].children[1].innerHTML="我来回答 <a onclick='window.fuckPaste()'>OvO</a>"
 }
 unsafeWindow.fuckPaste=function(){
-    document.getElementsByTagName("textarea")[0].innerHTML= (event.clipboardData || window.clipboardData).getData('text');
+    navigator.clipboard.readText().then(res=>{
+        document.getElementsByTagName("textarea")[0].innerHTML=res;
+        console.log("Pasted",res);
+    })
+    //(event.clipboardData || window.clipboardData).getData('text');
 }
 unsafeWindow.fl = 0;
 unsafeWindow.t = setTimeout(function(){
