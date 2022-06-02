@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name         Donkey Tree
-// @namespace    http://tampermonkey.net/
-// @version      0.2.1
+// @version      0.2.2
 // @description  try to take over the world!
 // @author       Aeroraven
 // @match        https://qah5.zhihuishu.com/qa.html*
@@ -10,11 +9,18 @@
 (function() {
     'use strict';
 unsafeWindow.s2 =function(){
-    var x=document.getElementsByClassName("answer-li");
-    for(var i=0;i<x.length;i++){
-        x[i].setAttribute('id',"fuckli-"+i);
-        x[i].innerHTML+="<a onclick='window.fuck(this.parentNode.children[2].children[0].children[0]);'> [直接粘贴到答题区] </a>";
-    }
+    unsafeWindow.s2Timeout = setInterval(()=>{
+        var x=document.getElementsByClassName("answer-li");
+        if(x.length==0){
+            return;
+        }
+        for(var i=0;i<x.length;i++){
+            x[i].setAttribute('id',"fuckli-"+i);
+            x[i].innerHTML+="<a onclick='window.fuck(this.parentNode.children[2].children[0].children[0]);' style='cursor:pointer'> [直接粘贴上方答案到答题区] </a><hr/>";
+        }
+        console.log("Find answers",x.length);
+        clearInterval(unsafeWindow.s2Timeout);
+    },1000)
 }
 unsafeWindow.fuck=function (x){
  let text = x.innerHTML;
@@ -28,11 +34,11 @@ unsafeWindow.fuck=function (x){
     document.getElementsByTagName("textarea")[0].innerHTML=text.slice(7).substring(0,text.length-14);
 }
 unsafeWindow.applyShit=function(){
-    document.getElementsByClassName("el-dialog__header")[0].children[0].children[1].innerHTML="我来回答 <a onclick='window.fuckPaste()'>OvO</a>"
+    document.getElementsByClassName("el-dialog__header")[0].children[0].children[1].innerHTML="我来回答 <a onclick='window.fuckPaste()'>【OvO 粘贴答案】</a>"
 }
 unsafeWindow.fuckPaste=function(){
     navigator.clipboard.readText().then(res=>{
-        document.getElementsByTagName("textarea")[0].innerHTML=res;
+        document.getElementsByTagName("textarea")[0].value=res;
         console.log("Pasted",res);
     })
     //(event.clipboardData || window.clipboardData).getData('text');
